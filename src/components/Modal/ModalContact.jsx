@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import DetailsModal from './detailsModal';
@@ -7,19 +7,21 @@ import DetailsModal from './detailsModal';
 
 const ModalContact = (props) => {
 
-  const [show, setShow] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [detailsData, setDetailsData] = useState(null)
   const handleClose = () => setShowDetailsModal(false);
   const handleShow = () => setShowDetailsModal(true);
 
 
+const view = props.view
   const data = props.data
-  const view = props.view
- 
-console.log(data)
+
+
+  
   return (
     <div>
- <DetailsModal show={showDetailsModal} handleClose={handleClose}></DetailsModal>
+   {detailsData && <DetailsModal show={showDetailsModal} handleClose={handleClose} data={detailsData}></DetailsModal>}
 
    {data && <Modal
       {...props}
@@ -45,16 +47,27 @@ console.log(data)
                         </thead>
                         <tbody>
 
-                          {data.map(val =>  <tr key={val.id}>
+                          {data.map(val => <tr key={val.id}>
                             <th scope="col">{val.country.name}</th>
                             <th scope="col">{val.phone}</th>
-                            <th scope="col"><Button variant='primary' onClick={handleShow}>View Details</Button></th>
+                            <th scope="col">
+                            <Button 
+                            variant='primary' 
+                            onClick={() => {
+                            handleShow();
+                            setDetailsData(data.find(item => item.id === val.id))
+                            }}
+                            >View Details
+                            </Button>
+                            </th>
                         </tr>)}
                        
                         </tbody>
                     </table>
       </Modal.Body>
       <Modal.Footer>
+      <input type="checkbox" id='check' aria-label="Checkbox for following text input" name="checkbox" onChange={() => setChecked(!checked)}/>
+      <label htmlFor='check'>check the box for even</label>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
