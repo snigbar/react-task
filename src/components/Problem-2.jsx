@@ -15,14 +15,7 @@ const Problem2 = () => {
           .then(apiData => {
             const contactData = apiData.results;
             setData(contactData)
-            // if(show === "all"){
-            //     setData(contactData); 
-            // }
-
-            // if(show === "us"){
-            //    const usContactData = contactData.filter(val => val.country?.name === "United States")
-            //    setData(usContactData)
-            // }
+        
             
           })
           .catch(error => {

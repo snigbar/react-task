@@ -12,11 +12,16 @@ const ModalContact = (props) => {
   const [detailsData, setDetailsData] = useState(null)
   const handleClose = () => setShowDetailsModal(false);
   const handleShow = () => setShowDetailsModal(true);
+  const [data, setData] = useState(null)
 
 
 const view = props.view
-  const data = props.data
+const allData= props.data
 
+useEffect(() => {
+  if(checked) setData(allData.filter(val => val.id % 2 === 0))
+  else setData(allData)
+},[allData,checked])
 
   
   return (
